@@ -1,0 +1,33 @@
+.main-header-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid black;
+}
+
+.header-icon-container {
+  padding: 8px;
+}
+
+.logo {
+  padding: 8px;
+}
+
+.header-icon  {
+  height: 32px;
+  padding-left: 8px;
+}
+
+.search-bar-container {
+  width: 100%;
+  border-bottom: 2px solid black;
+}
+
+.user-search-bar {
+  margin: 8px;
+  width: 96%;
+  border: 1px solid black;
+  padding-left: 4px;
+  border-radius: 5px;
+}
