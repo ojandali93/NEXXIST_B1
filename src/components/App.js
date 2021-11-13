@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../css/App.css';
 import Header from './Header/Header.js'
+import PropertyList from './Properties/PropertyList.js'
 
 const axios = require("axios").default
 
@@ -10,7 +11,7 @@ let options = {
   params: {location: 'santa monica, ca', home_type: 'Houses'},
   headers: {
     'x-rapidapi-host': 'zillow-com1.p.rapidapi.com',
-    'x-rapidapi-key': ''
+    'x-rapidapi-key': 'd215d48d9cmsh70fd20aaaf82139p17c47cjsnaab25fce9232'
   }
 }
 
@@ -19,7 +20,7 @@ let propertyOptions = {
   url: 'https://zillow-com1.p.rapidapi.com/property',
   headers: {
     'x-rapidapi-host': 'zillow-com1.p.rapidapi.com',
-    'x-rapidapi-key': ''
+    'x-rapidapi-key': 'd215d48d9cmsh70fd20aaaf82139p17c47cjsnaab25fce9232'
   }
 }
 
@@ -105,6 +106,9 @@ function App() {
   return (
     <div className="App">
       <Header />
+      {
+        propertyList.length === 0 ? <h1 className='loading-screen'>Loading Properties...</h1> : <PropertyList propertyList={propertyList}/>
+      }
     </div>
   );
 }
