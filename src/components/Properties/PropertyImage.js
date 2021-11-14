@@ -8,7 +8,7 @@ export default function PropertyImage(props) {
   return (
     <div>
       <div className="property-list-container">
-        <img className="property-image" src={property['imgSrc']} />
+        <img className="property-image" alt="Property" src={property['imgSrc']} />
       </div>
     </div>
   )

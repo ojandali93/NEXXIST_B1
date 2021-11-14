@@ -6,8 +6,8 @@ export default function TopHeader() {
     <div className="main-header-container">
       <h1 className="logo">NEXXIST</h1>
       <div className="header-icon-container">
-        <img className="activity header-icon" src="activity.png"/>
-        <img className="profile header-icon" src="profile.png"/>
+        <img className="activity header-icon" alt="Activity" src="activity.png"/>
+        <img className="profile header-icon" alt="Profile" src="profile.png"/>
       </div>
     </div>
   )

@@ -29,9 +29,28 @@
 .property-details-contianer {
   border-top: 2px solid black;
   padding: 8px;
+  padding-bottom: 0px;
+}
+
+.property-rev-exp-contianer {
+  border-top: 2px solid black;
+  padding: 8px;
+  padding-bottom: 0px;
 }
 
 .property-summary-container {
   display: flex;
   justify-content: space-between;
+}
+
+.rev-exp-sectional {
+  display: flex;
+  justify-content: space-between;
+}
+
+.disclaimer-text {
+  width: 70%;
+  font-size: 14px;
+  margin-left: auto;
+  margin-right: auto;
 }
