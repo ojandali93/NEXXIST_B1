@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,  } from 'react'
 import '../css/App.css';
 import Header from './Header/Header.js'
 import PropertyList from './Properties/PropertyList.js'
 
 const axios = require("axios").default
+export const PropertyListContext = React.createContext()
 
 let options = {
   method: 'GET',
@@ -11,7 +12,7 @@ let options = {
   params: {location: 'santa monica, ca', home_type: 'Houses'},
   headers: {
     'x-rapidapi-host': 'zillow-com1.p.rapidapi.com',
-    'x-rapidapi-key': 'd215d48d9cmsh70fd20aaaf82139p17c47cjsnaab25fce9232'
+    'x-rapidapi-key': ''
   }
 }
 
@@ -20,13 +21,14 @@ let propertyOptions = {
   url: 'https://zillow-com1.p.rapidapi.com/property',
   headers: {
     'x-rapidapi-host': 'zillow-com1.p.rapidapi.com',
-    'x-rapidapi-key': 'd215d48d9cmsh70fd20aaaf82139p17c47cjsnaab25fce9232'
+    'x-rapidapi-key': ''
   }
 }
 
 function App() {
 
   const [propertyList, setPropertyList] = useState([])
+  const [selectedPage, setSelectedPage] = useState('LOADING')
 
   function requestInitialListings(){
     axios.request(options).then(function (response) {
@@ -101,14 +103,28 @@ function App() {
 
   useEffect(() =>{
     console.log('succesfully added propertyList')
+    setSelectedPage('HOME')
   }, [propertyList])
+
+  const propertyListContextValue = {
+    selectedPage,
+    setSelectedPage
+  }
 
   return (
     <div className="App">
-      <Header />
-      {
-        propertyList.length === 0 ? <h1 className='loading-screen'>Loading Properties...</h1> : <PropertyList propertyList={propertyList}/>
-      }
+      <PropertyListContext.Provider value={propertyListContextValue}>
+        <Header />
+        {
+          propertyList.length === 0 ? <h1 className='loading-screen'>Loading Properties...</h1> : null
+        }
+        {
+          {
+            'HOME': <PropertyList propertyList={propertyList}/>,
+            'SINGLE PROPERTY': <h1>property</h1>
+          }[selectedPage]
+        }
+      </PropertyListContext.Provider>
     </div>
   );
 }
