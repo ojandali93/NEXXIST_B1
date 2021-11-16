@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function PropertyMetrics() {
+export default function PropertyListMetrics() {
   return (
     <div className="property-rev-exp-contianer">
       <h2>Key Investment Metrics:</h2>

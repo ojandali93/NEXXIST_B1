@@ -1,5 +1,5 @@
 import React from 'react'
-import SinglePropertyList from './SinglePropertyList.js'
+import PropertyListItem from './PropertyListItem.js'
 
 export default function PropertyList(props) {
   const {
@@ -13,7 +13,7 @@ export default function PropertyList(props) {
         propertyList.map((property) => {
           return(
             <div key={property['zpid']}>
-              <SinglePropertyList property={property}/>
+              <PropertyListItem property={property}/>
             </div>
           )
         })

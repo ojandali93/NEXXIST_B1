@@ -2,6 +2,7 @@ import React, { useState, useEffect,  } from 'react'
 import '../css/App.css';
 import Header from './Header/Header.js'
 import PropertyList from './Properties/PropertyList.js'
+import Property from './Properties/Property.js'
 
 const axios = require("axios").default
 export const PropertyListContext = React.createContext()
@@ -29,6 +30,7 @@ function App() {
 
   const [propertyList, setPropertyList] = useState([])
   const [selectedPage, setSelectedPage] = useState('LOADING')
+  const [selectedProperty, setSelectedProperty] = useState({})
 
   function requestInitialListings(){
     axios.request(options).then(function (response) {
@@ -106,9 +108,19 @@ function App() {
     setSelectedPage('HOME')
   }, [propertyList])
 
+  const handlePageSelect = (page, zpid) => {
+    for(let i = 0; i < propertyList.length; i++){
+      if(propertyList[i]['zpid'] === zpid){
+        setSelectedProperty(propertyList[i])
+      }
+    }
+    setSelectedPage(page)
+  }
+
   const propertyListContextValue = {
     selectedPage,
-    setSelectedPage
+    setSelectedPage,
+    handlePageSelect
   }
 
   return (
@@ -121,7 +133,7 @@ function App() {
         {
           {
             'HOME': <PropertyList propertyList={propertyList}/>,
-            'SINGLE PROPERTY': <h1>property</h1>
+            'SINGLE PROPERTY': <Property property={selectedProperty}/>
           }[selectedPage]
         }
       </PropertyListContext.Provider>
