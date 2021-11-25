@@ -1,5 +1,6 @@
 @import './Header.css';
 @import './propertyList.css';
+@import './property.css';
 
 * {
   font-family: 'Poppins', sans-serif;

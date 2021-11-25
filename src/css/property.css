@@ -1,0 +1,47 @@
+.property-single-rev-exp-contianer {
+  border-top: 2px solid black;
+  padding: 8px;
+  padding-bottom: 0px;
+}
+
+.expense-menu-row-bar {
+  padding-top: 16px;
+  margin-left: 8px;
+  margin-right: 8px;
+  /* padding-left: 8px;
+  padding-right: 8px; */
+  border-top: 2px solid grey;
+  border-bottom: 2px solid grey;
+}
+
+.mortgage-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.drop-down-icon {
+  height: 16px;
+  margin-left: 8px;
+}
+
+.expense-menu-value {
+  display: flex;
+}
+
+.mortgage-input-cell {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.mortage-input {
+  width: 140px;
+}
+
+.mortage-input-percent {
+  width: 60px;
+}
