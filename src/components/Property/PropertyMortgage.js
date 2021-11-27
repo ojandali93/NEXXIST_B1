@@ -16,6 +16,8 @@ export default function PropertyMortgage(props) {
   const { handleLoanProgram } = useContext(PropertyContext)
   const { handleClosingCost } = useContext(PropertyContext)
 
+  let downPaymentPercent = propertyMortgageData['down_payment_percent'] * 100
+
   return (
     <div>
       <div className="mortgage-input-cell">
@@ -30,7 +32,7 @@ export default function PropertyMortgage(props) {
         <label>Down Payment:</label>
         <div>
           <span>$<input onInput={(e) => {handleDownPayment(e.target.value)}} className="mortage-input" type="number" value={propertyMortgageData['down_payment_amount']}/></span>
-          <span>%<input onInput={(e) => {handleDownPaymentPercent(e.target.value)}} className="mortage-input-percent" type="number" defaultValue={propertyMortgageData['down_payment_percent']}/></span>
+          <span>%<input onInput={(e) => {handleDownPaymentPercent(e.target.value)}} className="mortage-input-percent" type="number" value={downPaymentPercent}/></span>
         </div>
       </div>
       <div className="mortgage-input-cell">

@@ -2,13 +2,19 @@ export function numberWithCommas(value) {
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-export function calculateDownPaymentAmount(price, percentDown){
-  let downPaymentAmount = price * percentDown
+// export function calculateDownPaymentAmount(price, percentDown){
+//   let downPaymentAmount = price * percentDown
+//   return downPaymentAmount.toFixed(2)
+// }
+
+export function calculateDownPaymentAmount(price, loanAmount){
+  let downPaymentAmount = price - loanAmount
   return downPaymentAmount.toFixed(2)
 }
 
 export function calculateDownPaymentPercent(price, amountDown){
   let downPaymentPercent = amountDown / price
+  console.log(downPaymentPercent)
   return downPaymentPercent.toFixed(2)
 }
 
@@ -18,14 +24,17 @@ export function calculateLoanAmount(price, percentDown){
   return loanAmount.toFixed(2)
 }
 
-export function calculateClosingCost(price, precentDown){
-  let loanAmount = calculateLoanAmount(price, precentDown)
+// export function calculateClosingCost(loanAmount, precentDown){
+//   let closingCost = loanAmount * .03
+//   return closingCost.toFixed(2)
+// }
+
+export function calculateClosingCost(loanAmount){
   let closingCost = loanAmount * .03
   return closingCost.toFixed(2)
 }
 
-export function calculateMonthlyMortgage(price, percentDown, ir){
-  let loanAmount = calculateLoanAmount(price, percentDown)
+export function calculateMonthlyMortgage(loanAmount, ir){
   let interestRate = (ir / 100)/12
   let powerRate = Math.pow(1 + interestRate, 360)
   let monthlyPayment = loanAmount * ((interestRate * powerRate) / (powerRate - 1))

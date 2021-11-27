@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { PropertyContext } from './Property.js';
 import PropertyMortgage from './PropertyMortgage.js'
+import { numberWithCommas } from '../Utils.js'
 
 export default function PropertySingleExpenses(props) {
   const {
@@ -22,7 +23,7 @@ export default function PropertySingleExpenses(props) {
             <div className='mortgage-info'>
               <p>Principle &amp; Interest</p>
               <div className="expense-menu-value">
-                <p>${currentMortgage}</p>
+                <p>${numberWithCommas(currentMortgage)}</p>
                 <img className="drop-down-icon" src="down-arrow.png"/>
               </div>
             </div>
@@ -38,7 +39,7 @@ export default function PropertySingleExpenses(props) {
               <div className='mortgage-info'>
                 <p>Principle &amp; Interest</p>
                 <div className="expense-menu-value">
-                  <p>${currentMortgage}</p>
+                  <p>${numberWithCommas(currentMortgage)}</p>
                   <img className="drop-down-icon" src="up-arrow.png"/>
                 </div>
               </div>
