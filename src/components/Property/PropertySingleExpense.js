@@ -13,6 +13,14 @@ export default function PropertySingleExpenses(props) {
   const { handleMortgageEdit } = useContext(PropertyContext)
   const { editingSection } = useContext(PropertyContext)
 
+  let hoaFee = 0
+  if(property['hoaFee'] === null){
+    hoaFee = 0
+  } else {
+    hoaFee = property['hoaFee']
+  }
+  let totalExpenses = parseInt(currentMortgage) + parseInt(property['taxAnnualAmount']) + parseInt(property['annualHomeInsurance'] / 12) + parseInt(hoaFee)
+
   return (
     <>
       <div className="property-single-rev-exp-contianer">
@@ -53,9 +61,15 @@ export default function PropertySingleExpenses(props) {
           <div className='mortgage-info'>
             <p>HOA Fee</p>
             <div className="expense-menu-value">
-              {
-                property['hoaFee'] === null ? <p>$0</p> : <p>${numberWithCommas(parseInt(property['hoaFee']))}</p>
-              }
+              <p>${hoaFee}</p>
+            </div>
+          </div>
+        </div>
+        <div className="expense-menu-row-bar">
+          <div className='mortgage-info'>
+            <p>Total Expenses</p>
+            <div className="expense-menu-value">
+              <p>${numberWithCommas(totalExpenses)}</p>
             </div>
           </div>
         </div>
