@@ -2,11 +2,6 @@ export function numberWithCommas(value) {
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-// export function calculateDownPaymentAmount(price, percentDown){
-//   let downPaymentAmount = price * percentDown
-//   return downPaymentAmount.toFixed(2)
-// }
-
 export function calculateDownPaymentAmount(price, loanAmount){
   let downPaymentAmount = price - loanAmount
   return downPaymentAmount.toFixed(2)
@@ -23,11 +18,6 @@ export function calculateLoanAmount(price, percentDown){
   let loanAmount = price * loanAmountPercent
   return loanAmount.toFixed(2)
 }
-
-// export function calculateClosingCost(loanAmount, precentDown){
-//   let closingCost = loanAmount * .03
-//   return closingCost.toFixed(2)
-// }
 
 export function calculateClosingCost(loanAmount){
   let closingCost = loanAmount * .03

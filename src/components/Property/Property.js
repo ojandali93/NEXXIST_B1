@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import PropertyImage from '../Properties/PropertyImage.js'
 import PropertyDetails from '../Properties/PropertyDetails.js'
 import PropertyContactAgent from '../Properties/PropertyContactAgent.js'
-import PropertySingleExpenses from './PropertySingleExpenses.js'
+import PropertySingleExpenses from './PropertySingleExpense.js'
+import PropertyRevenue from './PropertyRevenue.js'
 
 import { calculateDownPaymentAmount } from '../Utils.js'
 import { calculateDownPaymentPercent } from '../Utils.js'
@@ -17,18 +18,27 @@ export default function Property(props) {
     property
   } = props
 
+  let loanAmount = calculateLoanAmount(property['price'], .20) 
+  let totalRevenue = property['rentZestimate'] + 0
+
   let PandI = {}
   PandI['property_price'] = property['price'].toFixed(2) 
-  PandI['loan_amount'] = calculateLoanAmount(property['price'], .20) 
+  PandI['loan_amount'] = loanAmount
   PandI['down_payment_percent'] = .20 
-  PandI['down_payment_amount'] = calculateDownPaymentAmount(property['price'], .20) 
+  PandI['down_payment_amount'] = calculateDownPaymentAmount(property['price'], loanAmount) 
   PandI['closing_cost'] = calculateClosingCost(property['price'], .20) 
   PandI['loan_program'] = '30 Year Fixed' 
   PandI['interest_rate'] = 3.14 
 
+  let Revenue = {}
+  Revenue['rent'] = property['rentZestimate']
+  Revenue['additional_revenue'] = 0
+
   const [propertyMortgageData, setPropertyMortgageData] = useState(PandI)
   const [editingSection, setEditingSection] = useState('')
   const [currentMortgage, setCurrentMortgage] = useState(0)
+  const [currentRevenueData, setCurrentRevenueData] = useState(Revenue)
+  const [currentRevenue, setCurrentRevenue] = useState(totalRevenue)
 
   useEffect(() => {
     let loanAmount = propertyMortgageData['loan_amount']
@@ -81,35 +91,94 @@ export default function Property(props) {
   }
 
   const handleDownPayment  = (e) => {
-    console.log(e)
+    let loanAmount = propertyMortgageData['property_price'] - e
+    let downPaymentPercent = calculateDownPaymentPercent(propertyMortgageData['property_price'], e)
+    let closingCost = calculateClosingCost(loanAmount) 
+    let newMortgageDate = {}
+    newMortgageDate['property_price'] = propertyMortgageData['property_price']
+    newMortgageDate['loan_amount'] = loanAmount
+    newMortgageDate['down_payment_percent'] = downPaymentPercent
+    newMortgageDate['down_payment_amount'] = e
+    newMortgageDate['closing_cost'] = closingCost
+    newMortgageDate['loan_program'] = propertyMortgageData['loan_program']
+    newMortgageDate['interest_rate'] = propertyMortgageData['interest_rate']
+    setPropertyMortgageData(newMortgageDate)
   }
 
   const handleDownPaymentPercent  = (e) => {
-    console.log(e)
+    let downPaymentPercent = e / 100
+    let loanAmount = calculateLoanAmount(propertyMortgageData['property_price'], downPaymentPercent)
+    let downPaymentAmount = calculateDownPaymentAmount(propertyMortgageData['property_price'], loanAmount)
+    let closingCost = calculateClosingCost(loanAmount) 
+    let newMortgageDate = {}
+    newMortgageDate['property_price'] = propertyMortgageData['property_price']
+    newMortgageDate['loan_amount'] = loanAmount
+    newMortgageDate['down_payment_percent'] = downPaymentPercent
+    newMortgageDate['down_payment_amount'] = downPaymentAmount
+    newMortgageDate['closing_cost'] = closingCost
+    newMortgageDate['loan_program'] = propertyMortgageData['loan_program']
+    newMortgageDate['interest_rate'] = propertyMortgageData['interest_rate']
+    setPropertyMortgageData(newMortgageDate)
   }
 
   const handleInterestRate  = (e) => {
-    console.log(e)
+    let newMortgageDate = {}
+    newMortgageDate['property_price'] = propertyMortgageData['property_price']
+    newMortgageDate['loan_amount'] = propertyMortgageData['loan_amount']
+    newMortgageDate['down_payment_percent'] = propertyMortgageData['down_payment_percent']
+    newMortgageDate['down_payment_amount'] = propertyMortgageData['down_payment_amount']
+    newMortgageDate['closing_cost'] = propertyMortgageData['closing_cost']
+    newMortgageDate['loan_program'] = propertyMortgageData['loan_program']
+    newMortgageDate['interest_rate'] = e
+    setPropertyMortgageData(newMortgageDate)
   }
 
-  const handleLoanProgram  = (e) => {
-    console.log(e)
+  const handleRent = (e) => {
+    let total = parseInt(e) + parseInt(currentRevenueData['additional_revenue'])
+    let newRevenueData = {}
+    newRevenueData['rent'] = e
+    newRevenueData['additional_revenue'] = currentRevenueData['additional_revenue']
+    setCurrentRevenueData(newRevenueData)
+    setCurrentRevenue(total)
   }
 
-  const handleClosingCost  = (e) => {
-    console.log(e)
+  const handleAdditionalRevenue = (e) => {
+    let total = parseInt(e) + parseInt(currentRevenueData['rent'])
+    let newRevenueData = {}
+    newRevenueData['rent'] = currentRevenueData['rent']
+    newRevenueData['additional_revenue'] = e
+    setCurrentRevenueData(newRevenueData)
+    setCurrentRevenue(total)
+  }
+
+  const handleMortgageEdit = () => {
+    if(editingSection === 'MORTGAGE'){
+      setEditingSection('')
+    } else {
+      setEditingSection('MORTGAGE')
+    }
+  }
+
+  const handleRevenueEdit = () => {
+    if(editingSection === 'REVENUE'){
+      setEditingSection('')
+    } else {
+      setEditingSection('REVENUE')
+    }
   }
 
   const PropertyContextValue = {
     editingSection,
     handleSetionEdit,
+    handleMortgageEdit,
+    handleRevenueEdit,
     handlePropertyPrice,
     handleLoanAmount,
     handleDownPayment,
     handleDownPaymentPercent,
     handleInterestRate,
-    handleLoanProgram,
-    handleClosingCost
+    handleRent,
+    handleAdditionalRevenue
   }
 
   return (
@@ -119,6 +188,7 @@ export default function Property(props) {
           <PropertyImage property={property}/>
           <PropertyDetails property={property}/>
           <PropertySingleExpenses property={property} currentMortgage={currentMortgage} propertyMortgageData={propertyMortgageData}/>
+          <PropertyRevenue property={property} currentRevenue={currentRevenue} currentRevenueData={currentRevenueData} propertyMortgageData={propertyMortgageData}/>
           {/* <PropertyListMetrics property={property}/> */}
           <PropertyContactAgent property={property}/>
         </PropertyContext.Provider>
